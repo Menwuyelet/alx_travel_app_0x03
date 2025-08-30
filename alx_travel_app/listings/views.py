@@ -8,7 +8,9 @@ from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from .models import Booking
 import uuid
+from .tasks import send_booking_confirmation_email
 # Create your views here.
 
 class ListingViewset(viewsets.ModelViewSet):
@@ -25,9 +27,10 @@ class BookingViewset(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         listing_id = self.request.data.get('listing_id')
         listing = get_object_or_404(Listing, id=listing_id)
-
-        serializer.save(user=self.request.user, listing=listing)
-        
+        booking = serializer.save(user=self.request.user, listing=listing)
+        send_booking_confirmation_email.delay(
+            booking.user.email, str(booking.id)
+        )
 
 
 
