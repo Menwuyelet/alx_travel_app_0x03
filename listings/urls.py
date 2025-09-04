@@ -16,7 +16,3 @@ urlpatterns = [
     path("payments/verify/", VerifyPaymentView.as_view(), name="verify-payment"),
     
 ]
-# urlpatterns = [
-#     # path('hello/', HelloView.as_view(), name='hello'),
-#     path('api/', include(router.urls)),
-# ]

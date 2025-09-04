@@ -21,15 +21,13 @@ CHAPA_BASE_URL = "https://api.chapa.co/v1"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Initialize environment variables
 env = environ.Env(
     DEBUG=(bool, False)
 )
 
-# Read .env file
-environ.Env.read_env()
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-
-
+# Read .env file from BASE_DIR
+environ.Env.read_env(BASE_DIR / ".env")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -53,6 +51,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'drf_yasg',
+    'listings',
 
 ]
 

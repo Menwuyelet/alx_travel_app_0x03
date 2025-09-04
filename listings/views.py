@@ -14,7 +14,7 @@ from .tasks import send_booking_confirmation_email
 # Create your views here.
 
 class ListingViewset(viewsets.ModelViewSet):
-    serializer_class = [ListingSerializer]
+    serializer_class = ListingSerializer
     queryset = Booking.objects.all()
 
     def perform_create(self, serializer):
@@ -22,8 +22,9 @@ class ListingViewset(viewsets.ModelViewSet):
         listing.user.add(self.request.user)
 
 class BookingViewset(viewsets.ModelViewSet):
-    serializer_class = [BookingSerializer]
-
+    serializer_class = BookingSerializer
+    queryset = Booking.objects.all()
+    
     def perform_create(self, serializer):
         listing_id = self.request.data.get('listing_id')
         listing = get_object_or_404(Listing, id=listing_id)
